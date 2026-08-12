@@ -446,6 +446,58 @@ public class FragmentUtils {
     }
 
     /**
+     * 通过类名查找 Fragment
+     *
+     * @param manager FragmentManager
+     * @param clazz   Fragment 类名
+     * @return Fragment
+     */
+    @Nullable
+    public static <T extends Fragment> T findFragment(@NonNull FragmentManager manager,
+                                                      @NonNull Class<T> clazz) {
+        final List<Fragment> children = manager.getFragments();
+        for (Fragment f : children) {
+            if (clazz.isInstance(f)) {
+                //noinspection unchecked
+                return (T) f;
+            }
+            final T found = findFragment(f.getChildFragmentManager(), clazz);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 通过类名查找 Fragment
+     *
+     * @param activity FragmentActivity
+     * @param clazz    Fragment 类名
+     * @return Fragment
+     */
+    @Nullable
+    public static <T extends Fragment> T findFragment(@NonNull FragmentActivity activity,
+                                                      @NonNull Class<T> clazz) {
+
+        return findFragment(activity.getSupportFragmentManager(), clazz);
+    }
+
+    /**
+     * 通过类名查找 Fragment
+     *
+     * @param fragment Fragment
+     * @param clazz    Fragment 类名
+     * @return Fragment
+     */
+    @Nullable
+    public static <T extends Fragment> T findFragment(@NonNull Fragment fragment,
+                                                      @NonNull Class<T> clazz) {
+
+        return findFragment(fragment.getChildFragmentManager(), clazz);
+    }
+
+    /**
      * 查找可见的 Fragment
      * 注意：Activity 的 Window 的 DecorView 都还没有附着到窗口时，
      * Fragment 虽然已经 Resumed，但 isVisible 判断依然为 false，
