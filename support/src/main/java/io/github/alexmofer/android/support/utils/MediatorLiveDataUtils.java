@@ -34,7 +34,7 @@ public final class MediatorLiveDataUtils {
 
     @NonNull
     public static <T> MediatorLiveData<T> createForeverActiveMediatorLiveData(@Nullable T initValue) {
-        final MediatorLiveData<T> data = initValue == null ? new MediatorLiveData<>() : new MediatorLiveData<>(initValue);
+        final MediatorLiveData<T> data = new MediatorLiveData<>(initValue);
         //noinspection unchecked
         data.observeForever((Observer<T>) EMPTY_OBSERVER);
         return data;

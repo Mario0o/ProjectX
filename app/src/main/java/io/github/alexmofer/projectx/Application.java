@@ -18,6 +18,7 @@ package io.github.alexmofer.projectx;
 import android.content.Context;
 
 import io.github.alexmofer.android.support.app.ApplicationHolder;
+import io.github.alexmofer.projectx.features.AppSignatureUtil;
 
 /**
  * 应用 Application
@@ -29,5 +30,8 @@ public class Application extends android.app.Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         ApplicationHolder.create(this);
+        System.out.println("lalala----------------------------------md5:" + AppSignatureUtil.getAppSignature(this, "com.fawnflow.app", "MD5"));
+        System.out.println("lalala---------------------------------sha1:" + AppSignatureUtil.getAppSignature(this, "com.fawnflow.app", "SHA-1"));
+        System.out.println("lalala-------------------------------sha256:" + AppSignatureUtil.getAppSignature(this, "com.fawnflow.app", "SHA-256"));
     }
 }
